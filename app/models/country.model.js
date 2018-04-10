@@ -7,4 +7,5 @@ var DbSchema = mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Country', DbSchema);
+var country = mongoose.model('Country', DbSchema);
+module.exports = country;

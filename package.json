@@ -1,12 +1,12 @@
 {
   "name": "apicountry",
   "version": "1.0.0",
-  "description": "Simple api for retriving country code",
+  "description": "Simple api for retrieving country ISO codes",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Anthony Eghobor",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",

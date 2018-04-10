@@ -7,10 +7,10 @@ module.exports = function(app) {
     /** Coppy of version 1 url**/
 
     // Create a new Country
-    app.get('/api/v1/countries/add/:name/:code', countries.create);
+/*    app.get('/api/v1/countries/add/:name/:code', countries.create);*/
 
     // Retrieve all countries
-    app.get('/api/v1/countries', countries.findAll);
+ /*   app.get('/api/v1/countries', countries.findAll);*/
 
     // Retrieve a single Country with CountryId
     app.get('/api/v1/countries/:name', countries.findOne);
@@ -18,10 +18,10 @@ module.exports = function(app) {
     app.get('/api/v1/countries', countries.findOne);
 
     // Update a Country with CountryId
-    app.put('/api/v1/countries/:CountryId', countries.update);
+   // app.put('/api/v1/countries/:CountryId', countries.update);
 
     // Delete a Country with CountryId
-    app.delete('/api/v1/countries/:CountryId', countries.delete);
+ //   app.delete('/api/v1/countries/:CountryId', countries.delete);
 
 
     /** Coppy of previus rout **/
