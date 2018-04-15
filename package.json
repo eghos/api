@@ -4,9 +4,7 @@
   "description": "Simple api for retrieving country ISO codes",
   "main": "server.js",
  scripts": {
-    "start": "nodemon"
-  },
-  "a 
+    "start": "node server.js"
   },
   "author": "Anthony Eghobor",
   "license": "ISC",
