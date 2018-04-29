@@ -45,5 +45,7 @@ npm install
 
 #npm install -g nodemon
 
-node server.js &
-#nohup node server.js &
+#node server.js &
+nohup node server.js &
+
+exit 
