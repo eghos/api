@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
-// parse requests of content-type - application/x-www-form-urlencoded
+// Parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
@@ -20,7 +20,7 @@ mongoose.connection.on('error', function() {
 mongoose.connection.once('open', function() {
     console.log("Successfully connected to the database");
 
-// define Schema
+// Define Schema
     var DbSchema = mongoose.Schema({
     name: String,
     code: String
@@ -28,11 +28,11 @@ mongoose.connection.once('open', function() {
     timestamps: true
 });
  
-    // compile schema to model
+    // Map schema to model
     var country = mongoose.model('Country', DbSchema);
 	module.exports.countryModel = mongoose.model('Country', DbSchema);
 	
-    // a document instance
+    //  Document instances
 	var uk = new country({name: 'UK', code: 'GB'});
 	var france = new country({name: 'France', code: 'FR'});
 	var spain = new country({name: 'Spain', code: 'ES'});
