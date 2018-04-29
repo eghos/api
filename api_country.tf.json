@@ -1,0 +1,71 @@
+provider "aws" {
+  access_key = "my_access_key_ID"
+  secret_key = "my_access_key"
+  region    = "eu-west-1"
+ },
+
+resource "aws_key_pair" "deployer" {
+key_name = "terraform_rsa"
+public_key = "my_ssh_public_key"
+   },
+   
+resource "aws_instance" "web" {
+  ami           = "ami-3079f543"
+  instance_type = "t2.micro"
+  key_name = "terraform_rsa"
+  security_groups = ["docker-security-group"]
+  tags {
+   Name = "countries_iso"
+   }  
+
+ provisioner "file" { 
+            source = "/Users/anthony.eghobor/Desktop/API_Assignment/api/mongod.service",
+            destination = "/tmp/mongo.service"
+
+ connection {
+    type    = "ssh"
+    user    = "ubuntu"
+    private_key = "${file("/Users/anthony.eghobor/Desktop/API_Assignment/api/terraform_rsa")}"
+    timeout  = "15m"
+    agent    = false
+        }
+        },
+# provisioner "file" {
+#            source = "/tmp/api/api",
+#            destination = "/tmp"
+#  connection {
+#      type = "ssh"
+#      user = "ubuntu"
+#      private_key = "${file("/Users/anthony.eghobor/Desktop/API_Assignment/api/terraform_rsa")}"
+#      timeout  = "15m"
+#      agent  = false
+#     }
+#        },
+ provisioner "file" {
+            source = "/Users/anthony.eghobor/Desktop/API_Assignment/api/bootstrap.sh",
+            destination = "/tmp/bootstrap.sh"
+  connection {
+      type = "ssh"
+      user = "ubuntu"
+      private_key = "${file("/Users/anthony.eghobor/Desktop/API_Assignment/api/terraform_rsa")}"
+      timeout  = "15m"
+      agent = false
+   }
+
+        },
+provisioner "remote-exec" {
+ inline = [
+           "sudo mv /tmp/mongo.service /lib/systemd/system/",
+           "sudo mv /tmp/bootstrap.sh /usr/local/bin/bootstrap.sh",
+           "bash /usr/local/bin/bootstrap.sh"       
+ ]
+ connection {
+    type = "ssh"
+    user = "ubuntu"
+    private_key = "${file("/Users/anthony.eghobor/Desktop/API_Assignment/api/terraform_rsa")}"
+    timeout = "15m"
+    agent = false
+  }
+}
+
+}
