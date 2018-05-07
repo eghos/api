@@ -1,12 +1,12 @@
 provider "aws" {
-  access_key = "my_access_key_ID"
-  secret_key = "my_access_key"
+  access_key = ""
+  secret_key = ""
   region    = "eu-west-1"
  },
 
 resource "aws_key_pair" "deployer" {
 key_name = "terraform_rsa"
-public_key = "my_ssh_public_key"
+public_key = ""
    },
    
 resource "aws_instance" "web" {
@@ -53,11 +53,26 @@ resource "aws_instance" "web" {
    }
 
         },
+ provisioner "file" {
+            source = "/Users/anthony.eghobor/Desktop/API_Assignment/api/iso.service",
+            destination = "/tmp/iso.service"
+  connection {
+      type = "ssh"
+      user = "ubuntu"
+      private_key = "${file("/Users/anthony.eghobor/Desktop/API_Assignment/api/terraform_rsa")}"
+      timeout  = "15m"
+      agent = false
+   }
+        },
 provisioner "remote-exec" {
  inline = [
            "sudo mv /tmp/mongo.service /lib/systemd/system/",
+           "sudo mv /tmp/iso.service /lib/systemd/system",
            "sudo mv /tmp/bootstrap.sh /usr/local/bin/bootstrap.sh",
-           "bash /usr/local/bin/bootstrap.sh"       
+           "bash /usr/local/bin/bootstrap.sh",
+           "sudo systemctl daemon-reload",
+           "sudo systemctl enable iso",
+           "sudo systemctl restart iso"       
  ]
  connection {
     type = "ssh"

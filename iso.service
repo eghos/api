@@ -1,0 +1,11 @@
+[Unit]
+Description=LTPS NodeJS Test Application
+After=network-online.target
+
+[Service]
+Restart=on-failure
+WorkingDirectory=/var/api/
+ExecStart=/home/ubuntu/.nvm/versions/node/v9.8.0/bin/node /var/api/server.js
+
+[Install]
+WantedBy=multi-user.target
